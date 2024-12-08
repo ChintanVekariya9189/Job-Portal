@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { ArrowLeft, Loader2 } from "lucide-react";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import axios from "axios";
-import { COMPANY_API_END_POINT } from "@/utils/constant";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "sonner";
-import { useSelector } from "react-redux";
-import useGetCompanyById from "@/hooks/useGetCompanyById";
-import MainLayout from "../shared/MainLayout";
+import React, { useEffect, useState } from 'react';
+import { Button } from '../ui/button';
+import { ArrowLeft, Loader2 } from 'lucide-react';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
+import axios from 'axios';
+import { COMPANY_API_END_POINT } from '@/utils/constant';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
+import useGetCompanyById from '@/hooks/useGetCompanyById';
+import MainLayout from '../shared/MainLayout';
 
-const CompanySetup = () => {
+const CompanySetUp = () => {
   const params = useParams();
   useGetCompanyById(params._id);
   const [input, setInput] = useState({
-    name: "",
-    description: "",
-    website: "",
-    location: "",
+    name: '',
+    description: '',
+    website: '',
+    location: '',
     file: null,
   });
   const { singleCompany } = useSelector((store) => store.company);
@@ -37,12 +37,12 @@ const CompanySetup = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", input.name);
-    formData.append("description", input.description);
-    formData.append("website", input.website);
-    formData.append("location", input.location);
+    formData.append('name', input.name);
+    formData.append('description', input.description);
+    formData.append('website', input.website);
+    formData.append('location', input.location);
     if (input.file) {
-      formData.append("file", input.file);
+      formData.append('file', input.file);
     }
     try {
       setLoading(true);
@@ -55,18 +55,18 @@ const CompanySetup = () => {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
           withCredentials: true,
         }
       );
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/admin/companies");
+        navigate('/admin/companies');
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "Update failed");
+      toast.error(error.response?.data?.message || 'Update failed');
     } finally {
       setLoading(false);
     }
@@ -76,10 +76,10 @@ const CompanySetup = () => {
     // Populate the form fields with company data once fetched
     if (singleCompany) {
       setInput({
-        name: singleCompany.name || "",
-        description: singleCompany.description || "",
-        website: singleCompany.website || "",
-        location: singleCompany.location || "",
+        name: singleCompany.name || '',
+        description: singleCompany.description || '',
+        website: singleCompany.website || '',
+        location: singleCompany.location || '',
         file: null, // Clear file input; file uploads cannot be populated by default
       });
     }
@@ -92,7 +92,7 @@ const CompanySetup = () => {
           <form onSubmit={submitHandler}>
             <div className="flex items-center gap-5 p-8">
               <Button
-                onClick={() => navigate("/admin/companies")}
+                onClick={() => navigate('/admin/companies')}
                 variant="outline"
                 className="flex items-center gap-2 text-gray-500 font-semibold"
               >
@@ -163,4 +163,4 @@ const CompanySetup = () => {
   );
 };
 
-export default CompanySetup;
+export default CompanySetUp;
