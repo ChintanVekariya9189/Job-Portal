@@ -1,22 +1,22 @@
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { RadioGroup } from "../ui/radio-group";
-import { Button } from "../ui/button";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { USER_API_END_POINT } from "@/utils/constant";
-import { toast } from "sonner";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setUser } from "@/redux/authslice";
-import { Loader2 } from "lucide-react";
-import MainLayout from "../shared/MainLayout";
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
+import { RadioGroup } from '../ui/radio-group';
+import { Button } from '../ui/button';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { USER_API_END_POINT } from '@/utils/constant';
+import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading, setUser } from '@/redux/authSlice';
+import { Loader2 } from 'lucide-react';
+import MainLayout from '../shared/MainLayout';
 
 const Login = () => {
   const [input, setInput] = useState({
-    email: "",
-    password: "",
-    role: "",
+    email: '',
+    password: '',
+    role: '',
   });
 
   const { loading, user } = useSelector((store) => store.auth);
@@ -32,13 +32,13 @@ const Login = () => {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       });
       if (res.data.success) {
         dispatch(setUser(res.data.user));
-        navigate("/");
+        navigate('/');
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -50,7 +50,7 @@ const Login = () => {
   };
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate('/');
     }
   }, []);
   return (
@@ -90,7 +90,7 @@ const Login = () => {
                     type="radio"
                     name="role"
                     value="student"
-                    checked={input.role === "student"}
+                    checked={input.role === 'student'}
                     onChange={changeEventHandler}
                     className="cursor-pointer"
                   />
@@ -101,7 +101,7 @@ const Login = () => {
                     type="radio"
                     name="role"
                     value="recruiter"
-                    checked={input.role === "recruiter"}
+                    checked={input.role === 'recruiter'}
                     onChange={changeEventHandler}
                     className="cursor-pointer"
                   />
@@ -120,7 +120,7 @@ const Login = () => {
               </Button>
             )}
             <span className="text-sm">
-              Don't have an account?{" "}
+              Don't have an account?{' '}
               <Link to="/signup" className="text-blue-600">
                 Sign-Up
               </Link>
