@@ -10,7 +10,15 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'), // Alias for src directory
+      '@': path.resolve(__dirname, './src'),
     },
+  },
+  build: {
+    rollupOptions: {
+      input: './index.html',
+    },
+  },
+  server: {
+    historyApiFallback: true, // Ensure SPA routes work
   },
 });
